@@ -1,310 +1,666 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Content Autopilot — All Sites</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Content Autopilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-  :root{--bg:#0b0e14;--card:#131826;--line:#232a3d;--fg:#e6e9f0;--mut:#8a93a8;--acc:#5b8cff;--good:#39d98a;--warn:#ffb020;--bad:#ff5c5c;}
-  @media (prefers-color-scheme:light){:root{--bg:#f6f7fb;--card:#fff;--line:#e6e9f0;--fg:#1a1f2e;--mut:#6b7280;}}
-  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:28px;max-width:1100px;margin:0 auto}
-  h1{font-size:22px;margin:0 0 2px}.sub{color:var(--mut);margin:0 0 22px;font-size:13px}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:26px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .stat .v{font-size:26px;font-weight:700}.stat .l{color:var(--mut);font-size:13px}.stat.warn .v{color:var(--warn)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:20px;overflow-x:auto}
-  .site-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-  h3{margin:0;font-size:17px}.site-url{font-size:12px;color:var(--acc);font-weight:400;margin-left:8px;text-decoration:none}
-  .badge{font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:3px 10px;border-radius:20px;background:#5b8cff22;color:var(--acc);font-weight:700}
-  .badge.wordpress{background:#39d98a22;color:var(--good)}
-  .mini-stats{display:flex;gap:22px;margin-bottom:14px}
-  .mini-stats div{display:flex;flex-direction:column}.mini-stats b{font-size:20px}.mini-stats span{font-size:12px;color:var(--mut)}
-  .mini-stats .bad b{color:var(--bad)}.mini-stats .ok b{color:var(--good)}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
-  th{text-align:left;color:var(--mut);font-weight:600;padding:7px 9px;border-bottom:1px solid var(--line);font-size:12px}
-  td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top}
-  td.c{text-align:center}a{color:var(--acc)}.muted{color:var(--mut)}.warn{color:var(--warn)}
-</style></head><body>
-  <h1>Content Autopilot — All Sites</h1>
-  <p class="sub">Live view · updated 2026-09-22 23:04 UTC</p>
-  <div class="stats">
-    <div class="stat "><div class="v">3</div><div class="l">Sites</div></div>
-    <div class="stat "><div class="v">87</div><div class="l">Total articles</div></div>
-    <div class="stat "><div class="v">0</div><div class="l">Missing images</div></div>
-    <div class="stat "><div class="v">137</div><div class="l">Autopilot runs</div></div>
-  </div>
-  
-  <div class="card">
+  :root{
+    --ink:#faf9f7; --surface:#ffffff; --line:#e9e6df; --text:#1b1e27; --muted:#6f7480;
+    --violet:#7c3aed; --rose:#e11d74; --indigo:#5b5bd6; --teal:#0d9488; --good:#0f9d6b; --thumb-bg:#eee9e2;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --ink:#0e1016; --surface:#161922; --line:#262b37; --text:#e9ebf1; --muted:#8b93a6;
+    --violet:#a78bfa; --rose:#f472b6; --indigo:#818cf8; --teal:#2dd4bf; --good:#34d399; --thumb-bg:#1c2029;
+  }}
+  :root[data-theme="dark"]{
+    --ink:#0e1016; --surface:#161922; --line:#262b37; --text:#e9ebf1; --muted:#8b93a6;
+    --violet:#a78bfa; --rose:#f472b6; --indigo:#818cf8; --teal:#2dd4bf; --good:#34d399; --thumb-bg:#1c2029;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--ink)}
+  body{margin:0;color:var(--text);font-family:"Instrument Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:1160px;margin:0 auto;padding:40px 24px 64px}
+  header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+  .brand{font-family:"Fraunces",serif;font-weight:600;font-size:26px;letter-spacing:-.01em}
+  .brand .mark{color:var(--indigo)}
+  .updated{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:44px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .stat .v{font-family:"Fraunces",serif;font-weight:600;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .l{margin-top:8px;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .stat .v .ok{color:var(--good)}
+  .site{margin-bottom:48px}
+  .site-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+  .site-id{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .site-id h2{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+  .site-url{font-size:13px;color:var(--accent);text-decoration:none;font-weight:500}
+  .site-url:hover{text-decoration:underline}
+  .site-stats{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .platform{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:20px;padding:3px 10px}
+  .site-stats .sep{opacity:.5}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:18px}
+  .card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .14s ease,border-color .14s ease,box-shadow .14s ease}
+  .card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 10px 26px -14px color-mix(in srgb,var(--accent) 60%,transparent)}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .thumb{aspect-ratio:16/9;background:var(--thumb-bg);overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .noimg{display:grid;place-items:center;height:100%;color:var(--muted);font-size:12px}
+  .cbody{padding:14px 15px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .cbody h3{margin:0;font-size:15px;font-weight:600;line-height:1.32;letter-spacing:-.005em;text-wrap:balance}
+  .meta{margin-top:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .date{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted)}
+  .badge{font-size:11px;color:var(--muted);background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);border-radius:20px;padding:2px 8px;font-variant-numeric:tabular-nums}
+  footer{margin-top:8px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);text-align:center}
+  /* Auxiliary panels (run history, search console) — same surface language,
+     used below the site sections on the static/Pages dashboard only. */
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:24px;overflow-x:auto}
+  .panel h3{margin:0 0 14px;font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:-.01em}
+  .panel table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+  .panel th{text-align:left;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  .panel td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top;font-variant-numeric:tabular-nums}
+  .panel td.c{text-align:center}
+  .panel .muted{color:var(--muted)}
+  .panel a{color:var(--indigo)}
+  @media (max-width:640px){ .wrap{padding:28px 16px 48px} .brand{font-size:22px} }
+</style></head><body><div class="wrap">
+  <header>
+    <div class="brand"><span class="mark">&#10022;</span> Content Autopilot</div>
+    <div class="updated">Sep 23, 2026 &middot; 12:11 UTC</div>
+  </header>
+  <div class="stats"><div class="stat"><div class="v">3</div><div class="l">Sites on autopilot</div></div><div class="stat"><div class="v">90</div><div class="l">Published articles</div></div><div class="stat"><div class="v"><span class="ok">90/90</span></div><div class="l">With real photos</div></div><div class="stat"><div class="v">120,377</div><div class="l">Words published</div></div></div>
+  <section class="site" style="--accent:var(--teal)">
     <div class="site-head">
-      <h3>Nukvah <a class="site-url" href="https://nukvah.com" target="_blank">nukvah.com</a></h3>
-      <span class="badge wordpress">wordpress</span>
+      <div class="site-id">
+        <span class="dot"></span>
+        <h2>Nukvah</h2>
+        <a class="site-url" href="https://nukvah.com" target="_blank" rel="noopener">nukvah.com &#8599;</a>
+      </div>
+      <div class="site-stats">
+        <span class="platform">WordPress</span>
+        <span>10 posts</span><span class="sep">&middot;</span><span>1,137 avg words</span><span class="sep">&middot;</span><span>active through Oct 14, 2026</span>
+      </div>
     </div>
-    <div class="mini-stats">
-      <div><b>9</b><span>articles</span></div>
-      <div class="ok"><b>0</b><span>missing images</span></div>
-      <div><b>—</b><span>with products</span></div>
-    </div>
-    <table><thead><tr><th>Recent articles</th><th>Date</th><th class="c">Img</th><th class="c">Prod</th><th class="c">Links</th></tr></thead>
-      <tbody>
-    <tr>
-      <td><a href="https://nukvah.com/antioxidants-in-skincare-the-complete-science-guide/" target="_blank">Antioxidants in Skincare: The Complete Science Guide</a></td>
-      <td>2026-09-22</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/morning-vs-night-skincare-routine-whats-the-difference/" target="_blank">Morning vs Night Skincare Routine: What’s the Difference?</a></td>
-      <td>2026-09-21</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/niacinamide-benefits-for-skin-a-complete-guide/" target="_blank">Niacinamide Benefits for Skin: A Complete Guide</a></td>
-      <td>2026-09-20</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/peptides-in-skincare-benefits-science-routine/" target="_blank">Peptides in Skincare: Benefits, Science, &amp; Routine</a></td>
-      <td>2026-09-19</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/aha-vs-bha-which-exfoliant-do-you-need/" target="_blank">AHA vs BHA: Which Exfoliant Do You Need?</a></td>
-      <td>2026-09-18</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/vitamin-c-serum-benefits-for-radiant-protected-skin/" target="_blank">Vitamin C Serum Benefits for Radiant, Protected Skin</a></td>
-      <td>2026-09-17</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/how-to-get-glowing-skin-a-science-backed-routine/" target="_blank">How to Get Glowing Skin: A Science-Backed Routine</a></td>
-      <td>2026-09-16</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/how-to-reduce-fine-lines-on-forehead-expert-guide/" target="_blank">How to Reduce Fine Lines on Forehead: Expert Guide</a></td>
-      <td>2026-09-15</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://nukvah.com/how-to-start-using-retinol-a-beginners-guide/" target="_blank">How to Start Using Retinol: A Beginner’s Guide</a></td>
-      <td>2026-09-14</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr></tbody></table>
-  </div>
-<div class="card">
+    <div class="grid"><a class="card" href="https://nukvah.com/facial-oil-benefits-how-to-nourish-protect-skin/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2025/09/Superfood-Facial-Oil-00-768x768.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Facial Oil Benefits: How to Nourish &amp; Protect Skin</h3>
+        <div class="meta"><span class="date">Sep 22, 2026</span><span class="badge">1,482 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/antioxidants-in-skincare-the-complete-science-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2025/11/Nukvah-Produtos-768x512.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Antioxidants in Skincare: The Complete Science Guide</h3>
+        <div class="meta"><span class="date">Sep 22, 2026</span><span class="badge">1,133 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/morning-vs-night-skincare-routine-whats-the-difference/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2024/09/41410103-front-768x768.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Morning vs Night Skincare Routine: What’s the Difference?</h3>
+        <div class="meta"><span class="date">Sep 21, 2026</span><span class="badge">799 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/niacinamide-benefits-for-skin-a-complete-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2025/02/WhatsApp-Image-2025-01-30-at-17.40.17-768x768.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Niacinamide Benefits for Skin: A Complete Guide</h3>
+        <div class="meta"><span class="date">Sep 20, 2026</span><span class="badge">1,056 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/peptides-in-skincare-benefits-science-routine/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2024/09/NUKVAH-PRODUCTS-768x1152.png" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Peptides in Skincare: Benefits, Science, &amp; Routine</h3>
+        <div class="meta"><span class="date">Sep 19, 2026</span><span class="badge">1,464 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/aha-vs-bha-which-exfoliant-do-you-need/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2026/04/export-mp4-image-768x1365.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>AHA vs BHA: Which Exfoliant Do You Need?</h3>
+        <div class="meta"><span class="date">Sep 18, 2026</span><span class="badge">1,136 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/vitamin-c-serum-benefits-for-radiant-protected-skin/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2024/11/Hyaluronic-Infusion-Serum-back-768x768.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Vitamin C Serum Benefits for Radiant, Protected Skin</h3>
+        <div class="meta"><span class="date">Sep 17, 2026</span><span class="badge">1,032 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/how-to-get-glowing-skin-a-science-backed-routine/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2024/09/Age-is-just-a-number-when-your-skincare-game-is-strong.-At-26-Sharon-knows-the-secret-to-lasting-beauty-the-right-products-and-a-glowing-routine-with-NUKVAH-nukvahbeauty-skincare-skincarero-768x768.png" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Get Glowing Skin: A Science-Backed Routine</h3>
+        <div class="meta"><span class="date">Sep 16, 2026</span><span class="badge">1,064 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/how-to-reduce-fine-lines-on-forehead-expert-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2025/11/Jenni-capa-website-768x1024.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Reduce Fine Lines on Forehead: Expert Guide</h3>
+        <div class="meta"><span class="date">Sep 15, 2026</span><span class="badge">1,286 words</span></div>
+      </div>
+    </a><a class="card" href="https://nukvah.com/how-to-start-using-retinol-a-beginners-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://nukvah.com/wp-content/uploads/2024/11/Retinol-Anti-Aging-Skin-front-768x768.webp" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Start Using Retinol: A Beginner’s Guide</h3>
+        <div class="meta"><span class="date">Sep 14, 2026</span><span class="badge">914 words</span></div>
+      </div>
+    </a></div>
+  </section>
+<section class="site" style="--accent:var(--rose)">
     <div class="site-head">
-      <h3>The Queen of Beauty Salon <a class="site-url" href="https://thequeenofbeautysalon.com" target="_blank">thequeenofbeautysalon.com</a></h3>
-      <span class="badge wordpress">wordpress</span>
+      <div class="site-id">
+        <span class="dot"></span>
+        <h2>The Queen of Beauty Salon</h2>
+        <a class="site-url" href="https://thequeenofbeautysalon.com" target="_blank" rel="noopener">thequeenofbeautysalon.com &#8599;</a>
+      </div>
+      <div class="site-stats">
+        <span class="platform">WordPress</span>
+        <span>19 posts</span><span class="sep">&middot;</span><span>1,282 avg words</span>
+      </div>
     </div>
-    <div class="mini-stats">
-      <div><b>18</b><span>articles</span></div>
-      <div class="ok"><b>0</b><span>missing images</span></div>
-      <div><b>—</b><span>with products</span></div>
-    </div>
-    <table><thead><tr><th>Recent articles</th><th>Date</th><th class="c">Img</th><th class="c">Prod</th><th class="c">Links</th></tr></thead>
-      <tbody>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/hydrafacial-newark-de-vs-nj-where-to-glow/" target="_blank">Hydrafacial Newark DE vs NJ: Where to Glow</a></td>
-      <td>2026-09-22</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/olaplex-bond-repair-treatment-what-it-is-how-it-works/" target="_blank">Olaplex Bond Repair Treatment: What It Is &amp; How It Works</a></td>
-      <td>2026-09-21</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/how-long-do-hair-extensions-last-lifespan-guide/" target="_blank">How Long Do Hair Extensions Last? Lifespan Guide</a></td>
-      <td>2026-09-20</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/eyebrow-lamination-in-newark-what-it-is-how-it-works/" target="_blank">Eyebrow Lamination in Newark: What It Is &amp; How It Works</a></td>
-      <td>2026-09-19</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/partial-highlights-vs-full-highlights-which-is-right/" target="_blank">Partial Highlights vs Full Highlights: Which Is Right?</a></td>
-      <td>2026-09-18</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/best-facial-newark-nj-ultimate-glow-guide/" target="_blank">Best Facial Newark NJ: Ultimate Glow Guide</a></td>
-      <td>2026-09-17</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/wedding-hair-and-makeup-in-newark-your-complete-guide/" target="_blank">Wedding Hair and Makeup in Newark: Your Complete Guide</a></td>
-      <td>2026-09-16</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/full-head-hair-extensions-near-me-in-newark-nj/" target="_blank">Full Head Hair Extensions Near Me in Newark NJ</a></td>
-      <td>2026-09-15</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/hair-salon-newark-nj-open-now-the-queen-of-beauty/" target="_blank">Hair Salon Newark NJ Open Now | The Queen of Beauty</a></td>
-      <td>2026-09-14</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/hair-extensions-newark-nj-expert-guide-styles/" target="_blank">Hair Extensions Newark NJ: Expert Guide &amp; Styles</a></td>
-      <td>2026-09-12</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/hair-salon-in-newark-nj-your-local-style-guide/" target="_blank">Hair Salon in Newark, NJ: Your Local Style Guide</a></td>
-      <td>2026-09-11</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr>
-    <tr>
-      <td><a href="https://thequeenofbeautysalon.com/keratin-vs-brazilian-blowout-which-is-better/" target="_blank">Keratin vs Brazilian Blowout: Which Is Better?</a></td>
-      <td>2026-09-11</td>
-      <td class="c">🖼️</td>
-      <td class="c">—</td>
-      <td class="c">—</td>
-    </tr></tbody></table>
-  </div>
-<div class="card">
+    <div class="grid"><a class="card" href="https://thequeenofbeautysalon.com/best-mens-haircut-newark-nj-the-queen-of-beauty/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/best-mens-haircut-newark-nj-the-queen-of-beauty.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Mens Haircut Newark NJ | The Queen of Beauty</h3>
+        <div class="meta"><span class="date">Sep 22, 2026</span><span class="badge">1,099 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/hydrafacial-newark-de-vs-nj-where-to-glow/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/hydrafacial-newark-de-vs-nj-where-to-glow.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Hydrafacial Newark DE vs NJ: Where to Glow</h3>
+        <div class="meta"><span class="date">Sep 22, 2026</span><span class="badge">1,186 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/olaplex-bond-repair-treatment-what-it-is-how-it-works/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/olaplex-bond-repair-treatment-what-it-is-how-it-works.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Olaplex Bond Repair Treatment: What It Is &amp; How It Works</h3>
+        <div class="meta"><span class="date">Sep 21, 2026</span><span class="badge">1,085 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/how-long-do-hair-extensions-last-lifespan-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/how-long-do-hair-extensions-last-lifespan-guide.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How Long Do Hair Extensions Last? Lifespan Guide</h3>
+        <div class="meta"><span class="date">Sep 20, 2026</span><span class="badge">1,224 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/eyebrow-lamination-in-newark-what-it-is-how-it-works/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/eyebrow-lamination-in-newark-what-it-is-how-it-works.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Eyebrow Lamination in Newark: What It Is &amp; How It Works</h3>
+        <div class="meta"><span class="date">Sep 19, 2026</span><span class="badge">1,012 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/partial-highlights-vs-full-highlights-which-is-right/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/partial-highlights-vs-full-highlights-which-is-right.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Partial Highlights vs Full Highlights: Which Is Right?</h3>
+        <div class="meta"><span class="date">Sep 18, 2026</span><span class="badge">1,182 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/best-facial-newark-nj-ultimate-glow-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/best-facial-newark-nj-ultimate-glow-guide.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Facial Newark NJ: Ultimate Glow Guide</h3>
+        <div class="meta"><span class="date">Sep 17, 2026</span><span class="badge">876 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/wedding-hair-and-makeup-in-newark-your-complete-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/wedding-hair-and-makeup-in-newark-your-complete-guide.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Wedding Hair and Makeup in Newark: Your Complete Guide</h3>
+        <div class="meta"><span class="date">Sep 16, 2026</span><span class="badge">1,276 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/full-head-hair-extensions-near-me-in-newark-nj/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/full-head-hair-extensions-near-me-in-newark-nj.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Full Head Hair Extensions Near Me in Newark NJ</h3>
+        <div class="meta"><span class="date">Sep 15, 2026</span><span class="badge">1,222 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/hair-salon-newark-nj-open-now-the-queen-of-beauty/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/hair-salon-newark-nj-open-now-the-queen-of-beauty.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Hair Salon Newark NJ Open Now | The Queen of Beauty</h3>
+        <div class="meta"><span class="date">Sep 14, 2026</span><span class="badge">1,505 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/hair-extensions-newark-nj-expert-guide-styles/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/hair-extensions-newark-nj-expert-guide-styles.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Hair Extensions Newark NJ: Expert Guide &amp; Styles</h3>
+        <div class="meta"><span class="date">Sep 12, 2026</span><span class="badge">1,540 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/hair-salon-in-newark-nj-your-local-style-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/hair-salon-in-newark-nj-your-local-style-guide-1.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Hair Salon in Newark, NJ: Your Local Style Guide</h3>
+        <div class="meta"><span class="date">Sep 11, 2026</span><span class="badge">1,703 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/keratin-vs-brazilian-blowout-which-is-better/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/keratin-vs-brazilian-blowout-which-is-better-1.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Keratin vs Brazilian Blowout: Which Is Better?</h3>
+        <div class="meta"><span class="date">Sep 11, 2026</span><span class="badge">1,868 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/manicure-pedicure-newark-expert-nail-care-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/manicure-pedicure-newark-expert-nail-care-guide-2.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Manicure Pedicure Newark: Expert Nail Care Guide</h3>
+        <div class="meta"><span class="date">Sep 4, 2026</span><span class="badge">1,296 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/bridal-hair-and-makeup-in-newark-your-ironbound-guide/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/bridal-hair-and-makeup-in-newark-your-ironbound-guide-2.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Bridal Hair and Makeup in Newark: Your Ironbound Guide</h3>
+        <div class="meta"><span class="date">Sep 4, 2026</span><span class="badge">1,224 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/lash-extensions-newark-nj-styles-care-what-to-expect/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/lash-extensions-newark-nj-styles-care-what-to-expect-2.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Lash Extensions Newark NJ: Styles, Care &amp; What to Expect</h3>
+        <div class="meta"><span class="date">Sep 4, 2026</span><span class="badge">1,111 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/hair-extensions-newark-nj-guide-to-length-volume/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/hair-extensions-newark-nj-guide-to-length-volume-2.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Hair Extensions Newark NJ: Guide to Length &amp; Volume</h3>
+        <div class="meta"><span class="date">Sep 4, 2026</span><span class="badge">1,706 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/brazilian-blowout-in-newark-nj-what-to-expect/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/brazilian-blowout-in-newark-nj-what-to-expect-2.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Brazilian Blowout in Newark NJ: What to Expect</h3>
+        <div class="meta"><span class="date">Sep 4, 2026</span><span class="badge">1,284 words</span></div>
+      </div>
+    </a><a class="card" href="https://thequeenofbeautysalon.com/fresh-balayage-hair-color-ideas-for-every-shade/" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i0.wp.com/thequeenofbeautysalon.com/wp-content/uploads/2026/09/fresh-balayage-hair-color-ideas-for-every-shade-1.jpg?fit=768%2C401&ssl=1" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Balayage Hair Color in Newark NJ: The Brazilian Way</h3>
+        <div class="meta"><span class="date">Jul 22, 2026</span><span class="badge">953 words</span></div>
+      </div>
+    </a></div>
+  </section>
+<section class="site" style="--accent:var(--violet)">
     <div class="site-head">
-      <h3>Wizard Magic Shop <a class="site-url" href="https://wizardmagicshop.com" target="_blank">wizardmagicshop.com</a></h3>
-      <span class="badge shopify">shopify</span>
+      <div class="site-id">
+        <span class="dot"></span>
+        <h2>Wizard Magic Shop</h2>
+        <a class="site-url" href="https://wizardmagicshop.com" target="_blank" rel="noopener">wizardmagicshop.com &#8599;</a>
+      </div>
+      <div class="site-stats">
+        <span class="platform">Shopify</span>
+        <span>61 posts</span><span class="sep">&middot;</span><span>1,388 avg words</span><span class="sep">&middot;</span><span>58 link to products</span>
+      </div>
     </div>
-    <div class="mini-stats">
-      <div><b>60</b><span>articles</span></div>
-      <div class="ok"><b>0</b><span>missing images</span></div>
-      <div><b>58</b><span>with products</span></div>
-    </div>
-    <table><thead><tr><th>Recent articles</th><th>Date</th><th class="c">Img</th><th class="c">Prod</th><th class="c">Links</th></tr></thead>
-      <tbody>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/best-card-magic-tricks-book-start-learning-today" target="_blank">Best Card Magic Tricks Book: Start Learning Today</a></td>
-      <td>2026-09-22</td>
-      <td class="c">🖼️</td>
-      <td class="c">6</td>
-      <td class="c">4</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/mind-reading-tricks-with-words-easy-mentalism-secrets" target="_blank">Mind Reading Tricks With Words: Easy Mentalism Secrets</a></td>
-      <td>2026-09-21</td>
-      <td class="c">🖼️</td>
-      <td class="c">5</td>
-      <td class="c">7</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/levitation-tricks-revealed-how-magic-floating-works" target="_blank">Levitation Tricks Revealed: How Magic Floating Works</a></td>
-      <td>2026-09-20</td>
-      <td class="c">🖼️</td>
-      <td class="c">6</td>
-      <td class="c">2</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/bicycle-trick-decks-the-complete-magicians-guide" target="_blank">Bicycle Trick Decks: The Complete Magician's Guide</a></td>
-      <td>2026-09-19</td>
-      <td class="c">🖼️</td>
-      <td class="c">4</td>
-      <td class="c">3</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/mastering-sleight-of-hand-chicago-a-magicians-guide" target="_blank">Mastering Sleight of Hand Chicago: A Magician's Guide</a></td>
-      <td>2026-09-18</td>
-      <td class="c">🖼️</td>
-      <td class="c">5</td>
-      <td class="c">3</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/how-to-learn-magic-tricks-online-your-complete-guide" target="_blank">How to Learn Magic Tricks Online: Your Complete Guide</a></td>
-      <td>2026-09-17</td>
-      <td class="c">🖼️</td>
-      <td class="c">4</td>
-      <td class="c">4</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/easy-money-magic-tricks-for-beginners-to-learn-fast" target="_blank">Easy Money Magic Tricks for Beginners to Learn Fast</a></td>
-      <td>2026-09-16</td>
-      <td class="c">🖼️</td>
-      <td class="c">5</td>
-      <td class="c">5</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/how-to-read-minds-in-real-life-a-beginners-guide" target="_blank">How to Read Minds in Real Life: A Beginner's Guide</a></td>
-      <td>2026-09-15</td>
-      <td class="c">🖼️</td>
-      <td class="c">7</td>
-      <td class="c">6</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/how-do-magicians-read-minds-the-real-secrets-revealed" target="_blank">How Do Magicians Read Minds? The Real Secrets Revealed</a></td>
-      <td>2026-09-14</td>
-      <td class="c">🖼️</td>
-      <td class="c">5</td>
-      <td class="c">3</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/how-do-mentalists-read-minds-psychology-explained" target="_blank">How Do Mentalists Read Minds? Psychology Explained</a></td>
-      <td>2026-09-13</td>
-      <td class="c">🖼️</td>
-      <td class="c">5</td>
-      <td class="c">2</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/best-magic-kits-for-kids-age-8-12-wizard-shop" target="_blank">Best Magic Kits for Kids Age 8 12 | Wizard Shop</a></td>
-      <td>2026-09-12</td>
-      <td class="c">🖼️</td>
-      <td class="c">0</td>
-      <td class="c">4</td>
-    </tr>
-    <tr>
-      <td><a href="https://wizardmagicshop.com/blogs/news/trick-decks-magic-guide-to-gimmicked-card-decks" target="_blank">Trick Decks Magic: Guide to Gimmicked Card Decks</a></td>
-      <td>2026-09-11</td>
-      <td class="c">🖼️</td>
-      <td class="c">6</td>
-      <td class="c">2</td>
-    </tr></tbody></table>
-  </div>
-  <div class="card"><h3>Recent autopilot runs</h3>
+    <div class="grid"><a class="card" href="https://wizardmagicshop.com/blogs/news/best-coin-magic-tricks-oscar-owen-styles-explained" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-31835108.jpg?v=1790119329" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Coin Magic Tricks Oscar Owen Styles Explained</h3>
+        <div class="meta"><span class="date">Sep 22, 2026</span><span class="badge">2,051 words</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-card-magic-tricks-book-start-learning-today" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-6806399.jpg?v=1790082840" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Card Magic Tricks Book: Start Learning Today</h3>
+        <div class="meta"><span class="date">Sep 22, 2026</span><span class="badge">1,260 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/mind-reading-tricks-with-words-easy-mentalism-secrets" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-19976787.jpg?v=1790002694" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Mind Reading Tricks With Words: Easy Mentalism Secrets</h3>
+        <div class="meta"><span class="date">Sep 21, 2026</span><span class="badge">1,381 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/levitation-tricks-revealed-how-magic-floating-works" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-2757895.jpg?v=1789909049" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Levitation Tricks Revealed: How Magic Floating Works</h3>
+        <div class="meta"><span class="date">Sep 20, 2026</span><span class="badge">1,055 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/bicycle-trick-decks-the-complete-magicians-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-31362359.jpg?v=1789820556" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Bicycle Trick Decks: The Complete Magician's Guide</h3>
+        <div class="meta"><span class="date">Sep 19, 2026</span><span class="badge">1,094 words</span><span class="badge">4 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/mastering-sleight-of-hand-chicago-a-magicians-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-6255146.jpg?v=1789736623" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Mastering Sleight of Hand Chicago: A Magician's Guide</h3>
+        <div class="meta"><span class="date">Sep 18, 2026</span><span class="badge">1,094 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-learn-magic-tricks-online-your-complete-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-28958091.jpg?v=1789650764" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Learn Magic Tricks Online: Your Complete Guide</h3>
+        <div class="meta"><span class="date">Sep 17, 2026</span><span class="badge">1,347 words</span><span class="badge">4 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/easy-money-magic-tricks-for-beginners-to-learn-fast" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-33065049.jpg?v=1789564615" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Easy Money Magic Tricks for Beginners to Learn Fast</h3>
+        <div class="meta"><span class="date">Sep 16, 2026</span><span class="badge">891 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-read-minds-in-real-life-a-beginners-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-20835885.jpg?v=1789478374" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Read Minds in Real Life: A Beginner's Guide</h3>
+        <div class="meta"><span class="date">Sep 15, 2026</span><span class="badge">1,301 words</span><span class="badge">7 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-do-magicians-read-minds-the-real-secrets-revealed" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-6806482.jpg?v=1789397672" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How Do Magicians Read Minds? The Real Secrets Revealed</h3>
+        <div class="meta"><span class="date">Sep 14, 2026</span><span class="badge">1,028 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-do-mentalists-read-minds-psychology-explained" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-30837038.jpg?v=1789305137" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How Do Mentalists Read Minds? Psychology Explained</h3>
+        <div class="meta"><span class="date">Sep 13, 2026</span><span class="badge">1,105 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-magic-kits-for-kids-age-8-12-wizard-shop" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/pexels-photo-8390285.jpg?v=1789214569" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Magic Kits for Kids Age 8 12 | Wizard Shop</h3>
+        <div class="meta"><span class="date">Sep 12, 2026</span><span class="badge">1,004 words</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/trick-decks-magic-guide-to-gimmicked-card-decks" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/a96fa0237501a9dc7d587e5f164beeb7_b8e03635-942a-4bcc-bb6b-08483c6ffdb7.jpg?v=1789167732" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Trick Decks Magic: Guide to Gimmicked Card Decks</h3>
+        <div class="meta"><span class="date">Sep 11, 2026</span><span class="badge">1,068 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/stage-magician-name-generator-pick-your-moniker" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/3798e11939d6fec0ec5c112d5664e6a4_608447ab-1bc5-4616-96ba-df4bd2bfbaa1.jpg?v=1789167735" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Stage Magician Name Generator: Pick Your Moniker</h3>
+        <div class="meta"><span class="date">Sep 11, 2026</span><span class="badge">1,584 words</span><span class="badge">2 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-magic-tricks-of-all-time-and-how-to-learn-them" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/bcc8c746935eda23ee534699cde0fb99.jpg?v=1789167738" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Magic Tricks of All Time (And How to Learn Them)</h3>
+        <div class="meta"><span class="date">Sep 11, 2026</span><span class="badge">1,728 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/sleight-of-hand-tattoo-meanings-ink-ideas" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/c749fd463f7e0d7011c9fc75212686bb.jpg?v=1789167741" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Sleight of Hand Tattoo: Meanings &amp; Ink Ideas</h3>
+        <div class="meta"><span class="date">Sep 11, 2026</span><span class="badge">1,359 words</span><span class="badge">2 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/magic-tricks-for-kids-with-cards-easy-starter-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/326f9d1c52a7a046b53dc02891238754_005e7335-35ff-43a6-ba1c-00e54bd381bd.jpg?v=1789167744" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Magic Tricks for Kids with Cards: Easy Starter Guide</h3>
+        <div class="meta"><span class="date">Sep 10, 2026</span><span class="badge">2,047 words</span><span class="badge">4 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/the-ultimate-beginner-s-guide-to-easy-magic-tricks-you-can-learn-today" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/efaec4f64fdf3681068f166f64f5a090.jpg?v=1789167867" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Complete Beginner Guide to Getting Started in Magic</h3>
+        <div class="meta"><span class="date">Sep 10, 2026</span><span class="badge">1,844 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/learn-magic-tricks-near-me-top-local-online-ways" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/73d9f162762bfee9ee645ec0993ff13a_67017d1e-c6fc-40c2-be08-d1b7f496f801.jpg?v=1789167749" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Learn Magic Tricks Near Me: Top Local &amp; Online Ways</h3>
+        <div class="meta"><span class="date">Sep 7, 2026</span><span class="badge">1,660 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-coin-magic-tricks-app-learning-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/c175e0df3c90a016271458fc939d984f_fb535a9f-729b-484b-b4f3-b760fcf613d0.jpg?v=1789167751" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Coin Magic Tricks App &amp; Learning Guide</h3>
+        <div class="meta"><span class="date">Sep 6, 2026</span><span class="badge">2,121 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-find-a-close-up-magician-for-hire" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/49d63c80abc461b6a757469918d511f6_4bfbb89e-ee81-4902-acfe-f025d205d1fd.jpg?v=1789167753" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Find a Close Up Magician for Hire</h3>
+        <div class="meta"><span class="date">Sep 5, 2026</span><span class="badge">1,771 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/magic-tricks-for-beginners-easy-tricks-to-learn" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/1f3c6e7385bbb5178a9ad103ec6d1a42_b5b25557-5cfa-4e26-8b9b-53ac1ad3d174.jpg?v=1789167755" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Magic Tricks for Beginners: Easy Tricks to Learn</h3>
+        <div class="meta"><span class="date">Sep 2, 2026</span><span class="badge">1,281 words</span><span class="badge">4 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-card-magic-tricks-for-kids-easy-steps-to-amaze" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/13903f3e3e11bb8ea998f8a9bab3b69a.jpg?v=1789167758" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Card Magic Tricks for Kids: Easy Steps to Amaze</h3>
+        <div class="meta"><span class="date">Sep 1, 2026</span><span class="badge">996 words</span><span class="badge">4 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-read-minds-a-beginners-guide-to-mentalism" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/a178fbee4326541b7c98e9881821a05e_aeaafcf1-4150-4ef6-a592-93bd173d486b.jpg?v=1789167762" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Read Minds: A Beginner’s Guide to Mentalism</h3>
+        <div class="meta"><span class="date">Aug 29, 2026</span><span class="badge">1,394 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/easy-mind-reading-tricks-for-kids-secrets-magic-fun" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/359aa46b787987e5753a1d517bbfceb1_2ac32315-e27c-47cf-81df-ca43f222c161.jpg?v=1789167764" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Easy Mind Reading Tricks for Kids: Secrets &amp; Magic Fun</h3>
+        <div class="meta"><span class="date">Aug 28, 2026</span><span class="badge">998 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-do-mentalists-read-minds-the-real-secrets" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/be4013d8ecf05cac545b927b9e449ba3_63854e1f-5981-4dd6-9b1e-ed6f624a89ad.jpg?v=1789167766" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How Do Mentalists Read Minds? The Real Secrets</h3>
+        <div class="meta"><span class="date">Aug 27, 2026</span><span class="badge">1,226 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-magic-kits-for-kids-a-wizards-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/6684ae3c12e2171279db2c5e7cb15a27_a56aa4d5-2180-4c17-9710-02526413eead.jpg?v=1789167769" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Magic Kits for Kids: A Wizard's Guide</h3>
+        <div class="meta"><span class="date">Aug 26, 2026</span><span class="badge">1,218 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/the-ultimate-guide-to-trick-decks-of-cards" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/133ea98c27aef3d0cce89c2859188471_dd0acf90-9451-488c-9799-f8d1a5066f06.jpg?v=1789167771" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>The Ultimate Guide to Trick Decks of Cards</h3>
+        <div class="meta"><span class="date">Aug 25, 2026</span><span class="badge">1,107 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/mentalism-tricks-phone-password-how-to-guess-it" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/1a6e0b3a973ec93e21806226a71b02c5_445dd75a-9f15-443f-a78b-4f1f0211f942.jpg?v=1789167777" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Mentalism Tricks Phone Password: How to Guess It</h3>
+        <div class="meta"><span class="date">Aug 22, 2026</span><span class="badge">937 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/coin-magic-tricks-revealed-secrets-every-magician-knows" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/73bddd3f00fb413e8dc3ecce5c203ee9_71f04314-4604-4edb-957f-7bbe825ad844.jpg?v=1789167780" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Coin Magic Tricks Revealed: Secrets Every Magician Knows</h3>
+        <div class="meta"><span class="date">Aug 21, 2026</span><span class="badge">1,664 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/magic-tricks-for-beginners-step-by-step-start-here" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/f28711957625227f8a6e64a4c6585c6e_d2db78e4-bf3a-4ae7-9391-b22cd8d2d8c8.jpg?v=1789167782" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Magic Tricks for Beginners Step by Step: Start Here</h3>
+        <div class="meta"><span class="date">Aug 20, 2026</span><span class="badge">1,612 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-become-a-close-up-magician" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/0483f63b6442b74396422dd127f12fe1_6af2e91c-d406-4bd7-9ecc-3afe5cf9aef5.png?v=1789167790" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Become a Close Up Magician</h3>
+        <div class="meta"><span class="date">Aug 17, 2026</span><span class="badge">1,371 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/easy-card-magic-tricks-for-beginners-to-learn-fast" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/d527e080daa316d11e0a5195230cc267_ea0fe15c-16fb-4014-9be6-eb160c85238a.jpg?v=1789167792" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Easy Card Magic Tricks for Beginners to Learn Fast</h3>
+        <div class="meta"><span class="date">Aug 16, 2026</span><span class="badge">1,055 words</span><span class="badge">7 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/10-best-magic-tricks-for-kids-to-learn-and-perform" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/1d83a9c52ebf7b5d2320b38e6e547199.jpg?v=1789167795" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>10 Best Magic Tricks for Kids to Learn and Perform</h3>
+        <div class="meta"><span class="date">Aug 15, 2026</span><span class="badge">1,221 words</span><span class="badge">4 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/easy-magic-tricks-for-kids-to-learn-at-home" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/bbe84dfcb0f1905ec671a0675a548253_4bea5de5-b532-48fc-9bce-8e2840141521.jpg?v=1789167798" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Easy Magic Tricks for Kids to Learn at Home</h3>
+        <div class="meta"><span class="date">Aug 14, 2026</span><span class="badge">1,069 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-learn-magic-tricks-a-complete-beginner-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/a9f4b7194d646986dc5cc01d29982a3d.jpg?v=1789167802" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Learn Magic Tricks: A Complete Beginner Guide</h3>
+        <div class="meta"><span class="date">Aug 13, 2026</span><span class="badge">1,941 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/close-up-magic-chicago-shows-gear-tips" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/b7b5774d4ba84e882ef0e07709c1cded.jpg?v=1789167804" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Close Up Magic Chicago: Shows, Gear &amp; Tips</h3>
+        <div class="meta"><span class="date">Aug 12, 2026</span><span class="badge">1,332 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/card-magic-tricks-ultimate-guide-for-beginners-pros" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/441c9ff132fa285733ce0c51aa4623fc.jpg?v=1789167806" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Card Magic Tricks: Ultimate Guide for Beginners &amp; Pros</h3>
+        <div class="meta"><span class="date">Aug 11, 2026</span><span class="badge">1,366 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-magic-tricks-top-picks-for-every-skill-level" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/08e1cb9344bb77dc4cf228c147346d21_36ec8a66-bf37-49d1-8a05-a709b0e520a7.jpg?v=1789167808" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Magic Tricks: Top Picks for Every Skill Level</h3>
+        <div class="meta"><span class="date">Aug 10, 2026</span><span class="badge">1,148 words</span><span class="badge">5 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/sleight-of-hand-card-tricks-beginner-to-pro" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/7f6bf7fbbc02e42e1c9fec68587c7b23.jpg?v=1789167811" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Sleight of Hand Card Tricks: Beginner to Pro</h3>
+        <div class="meta"><span class="date">Aug 9, 2026</span><span class="badge">1,574 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/mentalism-tricks-for-beginners-easy-mind-reading" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/bde94040d770217d06f3205d2b3c8a76_a66fdb2c-8d7c-4dfc-b885-12e711f1549f.jpg?v=1789167813" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Mentalism Tricks for Beginners: Easy Mind Reading</h3>
+        <div class="meta"><span class="date">Aug 8, 2026</span><span class="badge">1,448 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/coin-magic-tricks-for-beginners-easy-step-by-step-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/e60c87c45ac042296011c5deaf18e91b.jpg?v=1789167815" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Coin Magic Tricks for Beginners: Easy Step-by-Step Guide</h3>
+        <div class="meta"><span class="date">Aug 7, 2026</span><span class="badge">1,097 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/easy-magic-tricks-for-beginners-at-home" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/d943b1f6ba9ea46d01ed113deab8e4e5.jpg?v=1789167818" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Easy Magic Tricks for Beginners at Home</h3>
+        <div class="meta"><span class="date">Aug 6, 2026</span><span class="badge">1,879 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-choose-the-perfect-stage-magician-outfit" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/cad04f002ee00dbdfc7b41674182dadb_f909f0cf-7351-43f1-9a25-84fc45014cbd.jpg?v=1789167820" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Choose the Perfect Stage Magician Outfit</h3>
+        <div class="meta"><span class="date">Aug 5, 2026</span><span class="badge">1,036 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/coin-magic-tricks-for-kids-easy-beginner-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/87a8027b88980d06665e002ecc3e9d5e.jpg?v=1789167829" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Coin Magic Tricks for Kids: Easy Beginner Guide</h3>
+        <div class="meta"><span class="date">Aug 2, 2026</span><span class="badge">1,611 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/magic-tricks-for-beginners-with-cards-step-by-step" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/6bfa9f186b5d7d3930fa0446a841dc7c.jpg?v=1789167831" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Magic Tricks for Beginners With Cards: Step-by-Step</h3>
+        <div class="meta"><span class="date">Aug 1, 2026</span><span class="badge">1,326 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/stage-magic-tricks-how-big-illusions-work-perform" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/e253c40f3a2f5e20f1f8ecc86f9af58f_8cd6d95b-bc74-46bf-8cd6-235585d6eb2a.jpg?v=1789167834" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Stage Magic Tricks: How Big Illusions Work &amp; Perform</h3>
+        <div class="meta"><span class="date">Jul 31, 2026</span><span class="badge">1,383 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/learn-sleight-of-hand-tricks-a-beginner-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/868a1bc1afc90e2d9655f7a9c2187ee2_3c4d1adc-6923-4306-88d6-a42a00c3443b.jpg?v=1789167836" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Learn Sleight of Hand Tricks: A Beginner Guide</h3>
+        <div class="meta"><span class="date">Jul 30, 2026</span><span class="badge">1,561 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/coin-magic-tricks-easy-beginner-starter-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/93a28c9943f808f306142fd0ed7bef39.jpg?v=1789167840" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Coin Magic Tricks Easy: Beginner Starter Guide</h3>
+        <div class="meta"><span class="date">Jul 28, 2026</span><span class="badge">1,539 words</span><span class="badge">10 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/magic-tricks-for-beginners-5-easy-tricks-to-master" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/a350e6f0e1716f847fa8478a6ee183d7_3307f9af-9e0b-45e7-92b5-2faf8fd58a50.jpg?v=1789167842" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Magic Tricks for Beginners: 5 Easy Tricks to Master</h3>
+        <div class="meta"><span class="date">Jul 27, 2026</span><span class="badge">1,456 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/stage-magic-trick-with-rollers-and-a-crank-explained" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/04f739a8d779503580d37b02cd675eb5.jpg?v=1789167845" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Stage Magic Trick with Rollers and a Crank: Explained</h3>
+        <div class="meta"><span class="date">Jul 26, 2026</span><span class="badge">1,623 words</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/sleight-of-hand-how-it-works-easy-card-tricks" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/5f4cae2a34c98ab2ca3f830c6e7e98ad_84b48418-e883-4833-84f8-260921c91464.jpg?v=1789167847" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Sleight of Hand: How It Works &amp; Easy Card Tricks</h3>
+        <div class="meta"><span class="date">Jul 25, 2026</span><span class="badge">1,553 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/master-coin-magic-tricks-easy-steps-for-beginners" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/cf29a6562e6b49f191bdb5a424ee87ef.jpg?v=1789167851" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Master Coin Magic Tricks: Easy Steps for Beginners</h3>
+        <div class="meta"><span class="date">Jul 23, 2026</span><span class="badge">1,572 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/mastering-close-up-magic-a-beginners-guide-to-the-art" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/d9dd897bc992401abc5d749e9d31278d_e066b130-aa52-4835-a387-23d696b99579.jpg?v=1789167854" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Mastering Close Up Magic: A Beginner's Guide to the Art</h3>
+        <div class="meta"><span class="date">Jul 21, 2026</span><span class="badge">1,404 words</span><span class="badge">3 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/magic-tricks-for-beginners-start-your-wizard-journey" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/070bd5ca97d583ad9eb428b5192de44c.jpg?v=1789167856" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Magic Tricks for Beginners: Start Your Wizard Journey</h3>
+        <div class="meta"><span class="date">Jul 21, 2026</span><span class="badge">1,506 words</span><span class="badge">2 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-card-magic-tricks-for-beginners-to-learn-now" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/e9881ed16b78195d567c5bb8722ed6c3.jpg?v=1789167858" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Card Magic Tricks for Beginners to Learn Now</h3>
+        <div class="meta"><span class="date">Jul 21, 2026</span><span class="badge">1,501 words</span><span class="badge">3 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/best-card-magic-tricks-top-picks-for-every-skill-level" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/2df37970d14b8fd2454896ab02bfa429.jpg?v=1789167861" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Card Magic Tricks: Top Picks for Every Skill Level</h3>
+        <div class="meta"><span class="date">Jul 21, 2026</span><span class="badge">1,670 words</span><span class="badge">3 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/top-30-must-have-magic-products-for-professional-magicians" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/00eca4642eae94ac02971610059cdb4c_2fb2d0c1-712d-44ce-a7e2-d928180b9093.jpg?v=1789167864" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Must-Have Magic Products for Professional Magicians</h3>
+        <div class="meta"><span class="date">May 3, 2026</span><span class="badge">1,799 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/how-to-perform-easy-magic-tricks-at-home-a-beginner-s-guide" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/249352100095bcd730f2cd3d2d56e443_fba1a67a-d52e-4903-b57f-1a8491d0edd4.jpg?v=1789167870" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Easy Magic Tricks to Do at Home with Household Items</h3>
+        <div class="meta"><span class="date">Dec 1, 2025</span><span class="badge">1,221 words</span><span class="badge">2 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/10-magic-gifts-for-wizard-magic-fans-wizard-magic-shop" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/4f5f880ff6f235f943139bafa5e46a5f.jpg?v=1789167872" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>Best Magic Gifts for Magicians and Magic Lovers</h3>
+        <div class="meta"><span class="date">Dec 1, 2025</span><span class="badge">981 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a><a class="card" href="https://wizardmagicshop.com/blogs/news/are-you-a-beginner" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://cdn.shopify.com/s/files/1/0697/7948/9005/articles/635bb97d4734e3e6fc81a6e9e4133b03_7176913d-06ba-4a5c-8f30-a13002db1d3e.jpg?v=1789167874" loading="lazy" alt=""></div>
+      <div class="cbody">
+        <h3>How to Start Learning Magic as an Absolute Beginner</h3>
+        <div class="meta"><span class="date">Jul 9, 2024</span><span class="badge">1,190 words</span><span class="badge">6 products</span></div>
+      </div>
+    </a></div>
+  </section>
+  <div class="panel"><h3>Recent autopilot runs</h3>
     <table><thead><tr><th>When (UTC)</th><th>Result</th><th>Details</th></tr></thead>
     <tbody>
+    <tr><td>2026-09-22 23:23</td><td>1 published</td>
+    <td class="muted">facial-oil-benefits-how-to-nourish-protect-skin</td></tr>
+    <tr><td>2026-09-22 23:22</td><td>1 published</td>
+    <td class="muted">best-mens-haircut-newark-nj-the-queen-of-beauty</td></tr>
+    <tr><td>2026-09-22 23:22</td><td>1 published</td>
+    <td class="muted">best-coin-magic-tricks-oscar-owen-styles-explained</td></tr>
     <tr><td>2026-09-22 13:16</td><td>1 published</td>
     <td class="muted">antioxidants-in-skincare-the-complete-science-guide</td></tr>
     <tr><td>2026-09-22 13:15</td><td>1 published</td>
@@ -328,12 +684,7 @@
     <tr><td>2026-09-19 12:23</td><td>1 published</td>
     <td class="muted">eyebrow-lamination-in-newark-what-it-is-how-it-works</td></tr>
     <tr><td>2026-09-19 12:22</td><td>1 published</td>
-    <td class="muted">bicycle-trick-decks-the-complete-magicians-guide</td></tr>
-    <tr><td>2026-09-18 13:15</td><td>1 published</td>
-    <td class="muted">aha-vs-bha-which-exfoliant-do-you-need</td></tr>
-    <tr><td>2026-09-18 13:04</td><td>1 published</td>
-    <td class="muted">partial-highlights-vs-full-highlights-which-is-right</td></tr>
-    <tr><td>2026-09-18 13:03</td><td>1 published</td>
-    <td class="muted">mastering-sleight-of-hand-chicago-a-magicians-guide</td></tr></tbody></table>
+    <td class="muted">bicycle-trick-decks-the-complete-magicians-guide</td></tr></tbody></table>
   </div>
-</body></html>
+  <footer>Live, published articles only &mdash; counts come straight from each site&rsquo;s CMS. Ask Claude to refresh anytime.</footer>
+</div></body></html>
